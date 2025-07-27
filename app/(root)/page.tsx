@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <div>
-      <h1 className="text-6xl text-brand">Storeo</h1>
+      <h1 className="text-6xl text-brand flex justify-center">Storeo</h1>
     </div>
   );
 }
