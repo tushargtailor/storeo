@@ -3,32 +3,30 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Separator } from "./ui/separator";
+import { Separator } from "@radix-ui/react-separator";
 import { navItems } from "@/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import FileUploader from "./FileUploader";
+import { Button } from "@/components/ui/button";
+import FileUploader from "@/components/FileUploader";
 import { signOutUser } from "@/lib/actions/user.actions";
 
 interface Props {
+  $id: string;
+  accountId: string;
   fullName: string;
   avatar: string;
   email: string;
-  accountId: string;
-  ownerId: string;
 }
 
 const MobileNavigation = ({
-  ownerId,
+  $id: ownerId,
   accountId,
   fullName,
   avatar,
@@ -46,6 +44,7 @@ const MobileNavigation = ({
         height={52}
         className="h-auto"
       />
+
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
           <Image
@@ -60,7 +59,7 @@ const MobileNavigation = ({
             <div className="header-user">
               <Image
                 src={avatar}
-                alt="Avatar"
+                alt="avatar"
                 width={44}
                 height={44}
                 className="header-user-avatar"
@@ -72,6 +71,7 @@ const MobileNavigation = ({
             </div>
             <Separator className="mb-4 bg-light-200/20" />
           </SheetTitle>
+
           <nav className="mobile-nav">
             <ul className="mobile-nav-list">
               {navItems.map(({ url, name, icon }) => (
@@ -79,7 +79,7 @@ const MobileNavigation = ({
                   <li
                     className={cn(
                       "mobile-nav-item",
-                      pathname === url && "shad-active"
+                      pathname === url && "shad-active",
                     )}
                   >
                     <Image
@@ -89,7 +89,7 @@ const MobileNavigation = ({
                       height={24}
                       className={cn(
                         "nav-icon",
-                        pathname === url && "nav-icon-active"
+                        pathname === url && "nav-icon-active",
                       )}
                     />
                     <p>{name}</p>
@@ -98,9 +98,11 @@ const MobileNavigation = ({
               ))}
             </ul>
           </nav>
+
           <Separator className="my-5 bg-light-200/20" />
+
           <div className="flex flex-col justify-between gap-5 pb-5">
-            <FileUploader />
+            <FileUploader ownerId={ownerId} accountId={accountId} />
             <Button
               type="submit"
               className="mobile-sign-out-button"
@@ -120,4 +122,5 @@ const MobileNavigation = ({
     </header>
   );
 };
+
 export default MobileNavigation;
